@@ -1,0 +1,16 @@
+{
+  "extends": ["next/core-web-vitals", "plugin:tailwindcss/recommended"],
+
+  "rules": {
+    "no-alert": "error",
+    "no-await-in-loop": "warn",
+    "no-compare-neg-zero": "warn",
+    "no-console": "error",
+    "no-magic-numbers": "warn",
+    "no-process-env": "error",
+    "no-var": "warn",
+    "tailwindcss/no-arbitrary-value": "warn",
+    "tailwindcss/no-custom-classname": "off",
+    "tailwindcss/classnames-order": "off"
+  }
+}
