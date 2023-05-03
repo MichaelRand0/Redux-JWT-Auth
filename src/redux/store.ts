@@ -1,10 +1,11 @@
-import counterSlice from '@/features/counter/counterSlice'
 import { configureStore } from '@reduxjs/toolkit'
+import { todoAPI } from './api/todo.api'
 
 export const store = configureStore({
   reducer: {
-    counter: counterSlice
+    [todoAPI.reducerPath]: todoAPI.reducer,
   },
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(todoAPI.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
