@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
-import { SearchUsersResponse } from '../models/todoModel'
+import { SearchUsersResponse, UserReposResponse } from '../models'
 
 const baseUrl = 'https://api.github.com/'
 
@@ -17,8 +17,13 @@ export const todoAPI = createApi({
           per_page: 10
         }
       })
+    }),
+    getUserRepos: build.query<UserReposResponse, string>({
+      query: (username:string) => ({
+        url: `users/${username}/repos`
+      })
     })
   })
 })
 
-export const {useSearchUsersQuery} = todoAPI
+export const {useSearchUsersQuery, useLazyGetUserReposQuery} = todoAPI
