@@ -1,10 +1,10 @@
 export interface SearchUsersResponse {
   total_count: number
   incomplete_results: boolean
-  items: User[]
+  items: GitUser[]
 }
 
-export interface User {
+export interface GitUser {
   login: string
   id: number
   node_id: string
@@ -133,4 +133,9 @@ export interface Owner {
   received_events_url: string
   type: string
   site_admin: boolean
+}
+
+export interface User {
+  login: string
+  password: string
 }

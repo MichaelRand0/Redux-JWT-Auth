@@ -1,15 +1,24 @@
 import Search from '@/shared/search/Search'
 import { useLazyGetUserReposQuery, useSearchUsersQuery } from '@/redux/api/todo.api'
-import { useSearch } from '@/shared/search/hooks'
 import { useDebounce } from '@/hooks/debounce'
 import { useEffect } from 'react'
 import SearchItem from '@/shared/search/components/SearchItem'
+import { useRouter } from 'next/router'
+import { useSearch } from '@/shared/search/hooks'
 
 export default function Home() {
   const { registerData, values, setLabel } = useSearch({
     name: 'search',
     label: 'Поиск пользователей GitHub',
   })
+  const { push } = useRouter()
+
+  useEffect(() => {
+    if (!localStorage.getItem('isAuth')) {
+      push('auth/login')
+    }
+  }, [])
+
   const debouncedValue = useDebounce(values?.search, 500)
   const { data, isFetching } = useSearchUsersQuery(debouncedValue, {
     skip: debouncedValue?.length < 3 || !debouncedValue,

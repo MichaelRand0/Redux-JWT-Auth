@@ -3,7 +3,7 @@ import React from 'react'
 import { UseFormRegister } from 'react-hook-form/dist/types/form'
 
 interface Props extends React.ComponentProps<'input'> {
-  register: UseFormRegister<any>
+  register: any
   error?: string
   containerClassName?: string
 }
