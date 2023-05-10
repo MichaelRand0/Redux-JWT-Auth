@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import SearchItem from '@/shared/search/components/SearchItem'
 import { useRouter } from 'next/router'
 import { useSearch } from '@/shared/search/hooks'
+import { useAuth } from './auth/hooks'
 
 export default function Home() {
   const { registerData, values, setLabel } = useSearch({
@@ -12,9 +13,15 @@ export default function Home() {
     label: 'Поиск пользователей GitHub',
   })
   const { push } = useRouter()
+  const { setAllUsers } = useAuth()
 
   useEffect(() => {
-    if (!localStorage.getItem('isAuth')) {
+    const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
+    console.log('dasdfa34', localStorage.getItem('user'))
+    if (allUsers.length > 0) {
+      setAllUsers(allUsers)
+    }
+    if (!localStorage.getItem('user')) {
       push('auth/login')
     }
   }, [])

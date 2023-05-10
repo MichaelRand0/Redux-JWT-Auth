@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 export function useAuth() {
   const dispatch = useDispatch()
   const useAuthSelector = useSelector((state: RootState) => state.auth)
-  const { user, error } = useAuthSelector
+  const { user, status } = useAuthSelector
 
   const actions = bindActionCreators(
     {
@@ -14,11 +14,13 @@ export function useAuth() {
     },
     dispatch,
   )
-  const { login, logout } = actions
+  const { login, logout, signup, setAllUsers } = actions
   return {
     user,
     login,
     logout,
-    error,
+    status,
+    signup,
+    setAllUsers
   }
 }

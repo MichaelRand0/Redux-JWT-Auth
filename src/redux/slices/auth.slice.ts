@@ -4,13 +4,16 @@ import { User } from '../models'
 interface AuthState {
   user: User | null
   allUsers: User[] | []
-  error: string | null
+  status: {
+    type: 'error' | 'success' | 'waiting'
+    message: string
+  } | null
 }
 
 const initialState: AuthState = {
   user: null,
   allUsers: [],
-  error: null,
+  status: null,
 }
 
 export const authSlice = createSlice({
@@ -26,17 +29,24 @@ export const authSlice = createSlice({
         (user) => user.login === action.payload.login,
       )?.[0]
       if (isUserAlreadyExists) {
-        state.error = 'Пользователь уже существует.'
+        state.status = {
+          type: 'error',
+          message: 'Пользователь уже существует.',
+        }
       } else {
         const newUsers = {
           payload: [...state.allUsers, action.payload],
           type: authSlice.actions.setAllUsers.type,
         }
         authSlice.caseReducers.setAllUsers(state, newUsers)
+        state.status = {
+          type: 'success',
+          message: 'Аккаунт успешно создан!',
+        }
       }
     },
     login(state, action: PayloadAction<User>) {
-      const currentUser = state.allUsers.filter((user) => user.login === action.payload.login)?.[0]
+      const currentUser = state.allUsers.filter((user) => user.login === action.payload.login && user.password === action.payload.password)?.[0]
       if (currentUser) {
         state.user = currentUser
         localStorage.setItem(
@@ -46,8 +56,15 @@ export const authSlice = createSlice({
             timestamp: new Date().getTime(),
           }),
         )
+        state.status = {
+          type: 'success',
+          message: 'Авторизация прошла успешна!',
+        }
       } else {
-        state.error = 'Неправильный логин или пароль.'
+        state.status = {
+          type: 'error',
+          message: 'Неправильный логин или пароль.',
+        }
       }
     },
     logout(state) {

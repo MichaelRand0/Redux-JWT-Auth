@@ -1,28 +1,114 @@
-import Modal from '@/shared/modal/Modal'
+import Modal from '@/shared/modals/Modal'
 import AuthViewBase from './components/AuthViewBase'
 import Title from '@/shared/typography/Title'
 import { i18n } from '@/locales'
 import InputMain from '@/shared/inputs/InputMain'
 import Link from '@/shared/typography/Link'
 import ButtonMain from '@/shared/buttons/ButtonMain'
+import { object, ref, string } from 'yup'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useAuth } from './hooks'
+import Alert from '@/shared/modals/Alert'
+import { useRouter } from 'next/router'
+import Dialog from '@/shared/dialogs/Dialog'
+import { useDialog } from '@/shared/dialogs/hooks'
+import { useEffect } from 'react'
 
 interface Props extends React.ComponentProps<'div'> {}
 
 const SignUp = (props: Props) => {
+  const schema = object({
+    login: string().required('Обязательное поле'),
+    password: string()
+      .required('Обязательное поле')
+      .min(6, 'Минимум 6 символов')
+      .matches(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}$/, 'Невалидный пароль'),
+    repeatPassword: string()
+      .oneOf([ref('password'), undefined], 'Пароли не совпадают')
+      .required('Обязательное поле'),
+  })
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  })
+  const { push } = useRouter()
+  const { signup, status } = useAuth()
+  const { open, toggleOpen } = useDialog()
+  const onSubmit = () => {
+    const user = {
+      login: getValues().login,
+      password: getValues().password,
+    }
+    signup(user)
+  }
+  useEffect(() => {
+    if (status?.type === 'success' || status?.type === 'error') {
+      toggleOpen(true)
+    }
+  }, [status])
+  const onError = () => {
+    console.log('errors', errors)
+  }
   return (
     <AuthViewBase>
       <Modal>
         <Title tag="h2" className="mb-5">
           {i18n._auth.registration}
         </Title>
-        <InputMain error="Error message" containerClassName="mb-3" label={i18n._auth.login} />
-        <InputMain containerClassName="mb-3" label={i18n._auth.password} />
-        <InputMain containerClassName="mb-3" label={i18n._auth.repeatPassword} />
-        <Link className="ml-auto" href="/auth/login">
-          {i18n._auth.signIn}
-        </Link>
-        <ButtonMain className="mt-10">{i18n._auth.createAccount}</ButtonMain>
+        <div className="max-w-[200px] w-full flex flex-col items-center">
+          <InputMain
+            register={{ ...register('login'), label: i18n._auth.login }}
+            error={errors?.['login']?.message?.toString()}
+            containerClassName="mb-3"
+          />
+          <InputMain
+            register={{ ...register('password'), label: i18n._auth.password }}
+            error={errors?.['password']?.message?.toString()}
+            containerClassName="mb-3"
+          />
+          <InputMain
+            register={{ ...register('repeatPassword'), label: i18n._auth.repeatPassword }}
+            error={errors?.['repeatPassword']?.message?.toString()}
+            containerClassName="mb-3"
+          />
+          <Link className="ml-auto" href="/auth/login">
+            {i18n._auth.signIn}
+          </Link>
+          {/* {!status?.isSuccess && (
+            <span className="text-red-500 mt-5 block text-xs">{status?.message}</span>
+          )} */}
+          <ButtonMain onClick={handleSubmit(onSubmit, onError)} className="mt-5 mb-3">
+            {i18n._auth.createAccount}
+          </ButtonMain>
+          <Alert>
+            <h3 className="font-medium text-sm">Пароль должен содержать:</h3>
+            <ul className="mt-2 list-disc list-inside text-xs">
+              <li className="mb-1">Минимум 8 символов</li>
+              <li className="mb-1">Минимум 1 цифру</li>
+              <li className="mb-1">1 букву лат. алфавита в нижнем регистре</li>
+              <li className="mb-1">1 букву лат. алфавита в верхнем регистре</li>
+              <li>Содержать минимум 1 спецсимвол, например: ! @ # ?</li>
+            </ul>
+          </Alert>
+        </div>
       </Modal>
+      <Dialog
+        variant={status?.type === 'success' ? 'success' : 'error'}
+        open={open}
+        handleOpen={() => {
+          toggleOpen(false)
+          if(status?.type === 'success') {
+            push('/auth/login')
+          }
+        }}
+      >
+        {status?.message}
+      </Dialog>
     </AuthViewBase>
   )
 }
