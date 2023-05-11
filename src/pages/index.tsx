@@ -50,8 +50,8 @@ export default function Home() {
   }
 
   return (
-    <div>
-      <div className="p-5 flex">
+    <div className='p-5 pb-32'>
+      <div className="flex">
         <Search
           searchItemHandler={searchItemHandler}
           registerData={registerData}
