@@ -1,4 +1,4 @@
-<h1>Проект: Redux-Todo</h1>
+<h1>Проект: Redux-GitHub</h1>
 <h2>Цели проекта:</h2>
 <ul>
   <li>Практика Redux Toolkit</li>
