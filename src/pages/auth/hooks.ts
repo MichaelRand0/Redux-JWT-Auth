@@ -14,13 +14,14 @@ export function useAuth() {
     },
     dispatch,
   )
-  const { login, logout, signup, setAllUsers } = actions
+  const { login, logout, signup, setStatus, setAllUsers } = actions
   return {
     user,
     login,
     logout,
     status,
     signup,
-    setAllUsers
+    setStatus,
+    setAllUsers,
   }
 }

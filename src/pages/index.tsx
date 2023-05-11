@@ -17,7 +17,6 @@ export default function Home() {
 
   useEffect(() => {
     const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
-    console.log('dasdfa34', localStorage.getItem('user'))
     if (allUsers.length > 0) {
       setAllUsers(allUsers)
     }

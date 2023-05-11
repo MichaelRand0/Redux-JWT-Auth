@@ -139,3 +139,8 @@ export interface User {
   login: string
   password: string
 }
+
+export type Status = {
+  type: 'error' | 'success' | 'waiting'
+  message: string
+} | null

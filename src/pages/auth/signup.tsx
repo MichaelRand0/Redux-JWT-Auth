@@ -37,7 +37,7 @@ const SignUp = (props: Props) => {
     resolver: yupResolver(schema),
   })
   const { push } = useRouter()
-  const { signup, status } = useAuth()
+  const { signup, status, setStatus } = useAuth()
   const { open, toggleOpen } = useDialog()
   const onSubmit = () => {
     const user = {
@@ -47,6 +47,7 @@ const SignUp = (props: Props) => {
     signup(user)
   }
   useEffect(() => {
+    console.log('SIGNUP status', status)
     if (status?.type === 'success' || status?.type === 'error') {
       toggleOpen(true)
     }
@@ -79,9 +80,6 @@ const SignUp = (props: Props) => {
           <Link className="ml-auto" href="/auth/login">
             {i18n._auth.signIn}
           </Link>
-          {/* {!status?.isSuccess && (
-            <span className="text-red-500 mt-5 block text-xs">{status?.message}</span>
-          )} */}
           <ButtonMain onClick={handleSubmit(onSubmit, onError)} className="mt-5 mb-3">
             {i18n._auth.createAccount}
           </ButtonMain>
@@ -102,7 +100,11 @@ const SignUp = (props: Props) => {
         open={open}
         handleOpen={() => {
           toggleOpen(false)
-          if(status?.type === 'success') {
+          setStatus({
+            type: 'waiting',
+            message: '',
+          })
+          if (status?.type === 'success') {
             push('/auth/login')
           }
         }}

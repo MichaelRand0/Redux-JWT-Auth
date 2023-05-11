@@ -25,13 +25,11 @@ const Login = (props: Props) => {
     register,
     handleSubmit,
     getValues,
-    reset,
-    watch,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status } = useAuth()
+  const { login, status, setStatus } = useAuth()
   const { open, toggleOpen } = useDialog()
   const { push } = useRouter()
   const onSubmit = () => {
@@ -45,12 +43,12 @@ const Login = (props: Props) => {
   const onError = () => {
     console.log('errors', errors)
   }
-  // useEffect(() => {
-  //   console.log('status', status)
-  //   if (status?.type === 'success' || status?.type === 'error') {
-  //     toggleOpen(true)
-  //   }
-  // }, [status?.type, status?.message])
+  useEffect(() => {
+    console.log('LOGIN status', status)
+    if (status?.type === 'success' || status?.type === 'error') {
+      toggleOpen(true)
+    }
+  }, [status])
   return (
     <AuthViewBase>
       <Modal>
@@ -71,7 +69,6 @@ const Login = (props: Props) => {
           <Link className="ml-auto" href="/auth/signup">
             {i18n._auth.createAccount}
           </Link>
-          {/* <span className="text-red-500 mt-5 block text-xs">{!status?.isSuccess && status?.message}</span> */}
           <ButtonMain onClick={handleSubmit(onSubmit, onError)} className="mt-10">
             {i18n._auth.signIn}
           </ButtonMain>
@@ -82,7 +79,11 @@ const Login = (props: Props) => {
         open={open}
         handleOpen={() => {
           toggleOpen(false)
-          if(status?.type === 'success') {
+          setStatus({
+            type: 'waiting',
+            message: '',
+          })
+          if (status?.type === 'success') {
             push('/')
           }
         }}

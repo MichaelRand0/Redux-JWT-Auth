@@ -1,13 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { User } from '../models'
+import { Status, User } from '../models'
 
 interface AuthState {
   user: User | null
   allUsers: User[] | []
-  status: {
-    type: 'error' | 'success' | 'waiting'
-    message: string
-  } | null
+  status: Status
 }
 
 const initialState: AuthState = {
@@ -20,6 +17,9 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setStatus(state, action: PayloadAction<Status>) {
+      state.status = action.payload
+    },
     setAllUsers(state, action: PayloadAction<User[]>) {
       state.allUsers = action.payload
       localStorage.setItem('allUsers', JSON.stringify(action.payload))
