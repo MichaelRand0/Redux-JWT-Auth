@@ -8,11 +8,11 @@ import InputMain from '@/shared/inputs/InputMain'
 import { object, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useAuth } from './hooks'
 import { useEffect } from 'react'
 import Dialog from '@/shared/dialogs/Dialog'
 import { useDialog } from '@/shared/dialogs/hooks'
 import { useRouter } from 'next/router'
+import { useAuth } from '@/hooks/auth'
 
 interface Props extends React.ComponentProps<'div'> {}
 

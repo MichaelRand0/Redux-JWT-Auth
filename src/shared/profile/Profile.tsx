@@ -1,4 +1,4 @@
-import { useAuth } from "@/pages/auth/hooks"
+import { useAuth } from "@/hooks/auth"
 import ButtonMain from "../buttons/ButtonMain"
 
 interface Props extends React.ComponentProps<'div'> {

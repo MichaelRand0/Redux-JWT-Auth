@@ -8,12 +8,12 @@ import ButtonMain from '@/shared/buttons/ButtonMain'
 import { object, ref, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useAuth } from './hooks'
 import Alert from '@/shared/modals/Alert'
 import { useRouter } from 'next/router'
 import Dialog from '@/shared/dialogs/Dialog'
 import { useDialog } from '@/shared/dialogs/hooks'
 import { useEffect } from 'react'
+import { useAuth } from '@/hooks/auth'
 
 interface Props extends React.ComponentProps<'div'> {}
 
