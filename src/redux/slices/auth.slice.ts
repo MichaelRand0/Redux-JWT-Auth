@@ -17,6 +17,20 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
+    setUser(state, action: PayloadAction<User | null>) {
+      state.user = action.payload
+      localStorage.setItem(
+        'user',
+        JSON.stringify(
+          action.payload
+            ? {
+                ...action.payload,
+                timestamp: new Date().getTime(),
+              }
+            : null,
+        ),
+      )
+    },
     setStatus(state, action: PayloadAction<Status>) {
       state.status = action.payload
     },
@@ -46,16 +60,15 @@ export const authSlice = createSlice({
       }
     },
     login(state, action: PayloadAction<User>) {
-      const currentUser = state.allUsers.filter((user) => user.login === action.payload.login && user.password === action.payload.password)?.[0]
+      const currentUser = state.allUsers.filter(
+        (user) => user.login === action.payload.login && user.password === action.payload.password,
+      )?.[0]
       if (currentUser) {
-        state.user = currentUser
-        localStorage.setItem(
-          'user',
-          JSON.stringify({
-            ...currentUser,
-            timestamp: new Date().getTime(),
-          }),
-        )
+        const newUser = {
+          payload: { ...currentUser },
+          type: authSlice.actions.setUser.type,
+        }
+        authSlice.caseReducers.setUser(state, newUser)
         state.status = {
           type: 'success',
           message: 'Авторизация прошла успешна!',
@@ -68,8 +81,11 @@ export const authSlice = createSlice({
       }
     },
     logout(state) {
-      state.user = null
-      localStorage.setItem('user', 'null')
+      const newUser = {
+        payload: null,
+        type: authSlice.actions.setUser.type,
+      }
+      authSlice.caseReducers.setUser(state, newUser)
     },
   },
 })

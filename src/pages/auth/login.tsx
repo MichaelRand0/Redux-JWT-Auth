@@ -29,7 +29,15 @@ const Login = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status, setStatus } = useAuth()
+  const { login, status, setStatus, initData, user } = useAuth()
+  useEffect(() => {
+    initData()
+  }, [])
+  useEffect(() => {
+    if (user) {
+      push('/')
+    }
+  }, [user])
   const { open, toggleOpen } = useDialog()
   const { push } = useRouter()
   const onSubmit = () => {
@@ -44,7 +52,6 @@ const Login = (props: Props) => {
     console.log('errors', errors)
   }
   useEffect(() => {
-    console.log('LOGIN status', status)
     if (status?.type === 'success' || status?.type === 'error') {
       toggleOpen(true)
     }
@@ -83,9 +90,6 @@ const Login = (props: Props) => {
             type: 'waiting',
             message: '',
           })
-          if (status?.type === 'success') {
-            push('/')
-          }
         }}
       >
         {status?.message}

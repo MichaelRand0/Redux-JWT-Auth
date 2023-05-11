@@ -6,6 +6,7 @@ import SearchItem from '@/shared/search/components/SearchItem'
 import { useRouter } from 'next/router'
 import { useSearch } from '@/shared/search/hooks'
 import { useAuth } from './auth/hooks'
+import Profile from '@/shared/profile/Profile'
 
 export default function Home() {
   const { registerData, values, setLabel } = useSearch({
@@ -13,17 +14,13 @@ export default function Home() {
     label: 'Поиск пользователей GitHub',
   })
   const { push } = useRouter()
-  const { setAllUsers } = useAuth()
+  const { user } = useAuth()
 
   useEffect(() => {
-    const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
-    if (allUsers.length > 0) {
-      setAllUsers(allUsers)
-    }
-    if (!localStorage.getItem('user')) {
+    if (!user) {
       push('auth/login')
     }
-  }, [])
+  }, [user])
 
   const debouncedValue = useDebounce(values?.search, 500)
   const { data, isFetching } = useSearchUsersQuery(debouncedValue, {
@@ -53,41 +50,44 @@ export default function Home() {
   }
 
   return (
-    <div className="p-5 flex">
-      <Search
-        searchItemHandler={searchItemHandler}
-        registerData={registerData}
-        data={debouncedValue?.length >= 3 ? searchResults : []}
-      />
+    <div>
+      <div className="p-5 flex">
+        <Search
+          searchItemHandler={searchItemHandler}
+          registerData={registerData}
+          data={debouncedValue?.length >= 3 ? searchResults : []}
+        />
 
-      <div className="ml-20 border p-5 w-full ">
-        {repos ? (
-          areReposFetching ? (
-            <span>Получаем репозитории...</span>
+        <div className="ml-20 border p-5 w-full ">
+          {repos ? (
+            areReposFetching ? (
+              <span>Получаем репозитории...</span>
+            ) : (
+              <h2 className="text-xl font-bold">
+                Репозитории <span className="text-green-500">{repos?.[0]?.owner?.login}</span>:
+              </h2>
+            )
           ) : (
-            <h2 className="text-xl font-bold">
-              Репозитории <span className="text-green-500">{repos?.[0]?.owner?.login}</span>:
-            </h2>
-          )
-        ) : (
-          'Выберите пользователя для просмотра его репозиториев'
-        )}
-        <div className="mt-2 max-h-[500px] overflow-auto">
-          {repos
-            ? repos?.length > 0
-              ? repos?.map((repo) => {
-                  return (
-                    <SearchItem
-                      className="mb-1 last:mb-0"
-                      key={repo.name}
-                      item={{ name: repo.name, link: repo.html_url }}
-                    />
-                  )
-                })
-              : 'Репозитории отсутствуют...'
-            : ''}
+            'Выберите пользователя для просмотра его репозиториев'
+          )}
+          <div className="mt-2 max-h-[500px] overflow-auto">
+            {repos
+              ? repos?.length > 0
+                ? repos?.map((repo) => {
+                    return (
+                      <SearchItem
+                        className="mb-1 last:mb-0"
+                        key={repo.name}
+                        item={{ name: repo.name, link: repo.html_url }}
+                      />
+                    )
+                  })
+                : 'Репозитории отсутствуют...'
+              : ''}
+          </div>
         </div>
       </div>
+      <Profile />
     </div>
   )
 }

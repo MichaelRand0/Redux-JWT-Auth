@@ -8,13 +8,20 @@ export function useAuth() {
   const useAuthSelector = useSelector((state: RootState) => state.auth)
   const { user, status } = useAuthSelector
 
+  const initData = () => {
+    const user = JSON.parse(localStorage.getItem('user') ?? 'null')
+    const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
+    setAllUsers(allUsers)
+    setUser(user)
+  }
+
   const actions = bindActionCreators(
     {
       ...authSlice.actions,
     },
     dispatch,
   )
-  const { login, logout, signup, setStatus, setAllUsers } = actions
+  const { login, logout, signup, setStatus, setAllUsers, setUser } = actions
   return {
     user,
     login,
@@ -23,5 +30,7 @@ export function useAuth() {
     signup,
     setStatus,
     setAllUsers,
+    setUser,
+    initData
   }
 }
