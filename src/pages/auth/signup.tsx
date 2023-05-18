@@ -12,8 +12,8 @@ import Alert from '@/shared/modals/Alert'
 import { useRouter } from 'next/router'
 import Dialog from '@/shared/dialogs/Dialog'
 import { useDialog } from '@/shared/dialogs/hooks'
-import { useEffect } from 'react'
 import { useAuth } from '@/hooks/auth'
+import { usePopup } from '@/hooks/popup'
 
 interface Props extends React.ComponentProps<'div'> {}
 
@@ -37,21 +37,24 @@ const SignUp = (props: Props) => {
     resolver: yupResolver(schema),
   })
   const { push } = useRouter()
-  const { signup, status, setStatus } = useAuth()
+  const { status, setStatus, createUser } = useAuth()
   const { open, toggleOpen } = useDialog()
-  const onSubmit = () => {
+  const {setPopup} = usePopup()
+  const onSubmit = async () => {
     const user = {
       login: getValues().login,
       password: getValues().password,
     }
-    signup(user)
+    await createUser(user).then((resp:any) => {
+      if(!resp?.error) {
+        setPopup({
+          type: 'success',
+          message: 'Аккаунт успешно создан!',
+          toRoute: '/auth/login'
+        })
+      }
+    })
   }
-  useEffect(() => {
-    console.log('SIGNUP status', status)
-    if (status?.type === 'success' || status?.type === 'error') {
-      toggleOpen(true)
-    }
-  }, [status])
   const onError = () => {
     console.log('errors', errors)
   }

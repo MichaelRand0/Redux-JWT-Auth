@@ -1,13 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { todoAPI } from './api/todo.api'
 import { authSlice } from './slices/auth.slice'
+import { gitAPI } from './api/github.api'
+import { authAPI } from './api/auth.api'
+import { popupSlice } from './slices/popup.slice'
 
 export const store = configureStore({
   reducer: {
-    [todoAPI.reducerPath]: todoAPI.reducer,
-    auth: authSlice.reducer
+    popup: popupSlice.reducer,
+    auth: authSlice.reducer,
+    [gitAPI.reducerPath]: gitAPI.reducer,
+    [authAPI.reducerPath]: authAPI.reducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(todoAPI.middleware),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(gitAPI.middleware, authAPI.middleware),
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

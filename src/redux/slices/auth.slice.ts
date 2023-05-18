@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { Status, User } from '../models'
+import { User } from '../models/git'
 
 interface AuthState {
   user: User | null
   allUsers: User[] | []
-  status: Status
+  status: any
 }
 
 const initialState: AuthState = {
@@ -31,7 +31,7 @@ export const authSlice = createSlice({
         ),
       )
     },
-    setStatus(state, action: PayloadAction<Status>) {
+    setStatus(state, action: PayloadAction<any>) {
       state.status = action.payload
     },
     setAllUsers(state, action: PayloadAction<User[]>) {

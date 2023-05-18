@@ -1,0 +1,44 @@
+{
+  "users": [
+    {
+      "login": "MichaelRand02",
+      "password": "Qwerty2@",
+      "id": 1
+    },
+    {
+      "login": "MichaelRand02",
+      "password": "Qwerty2@",
+      "id": 2
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "Qwerty2@",
+      "id": 3
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "Qwerty2@",
+      "id": 4
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "Qwerty2@",
+      "id": 5
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "Qwerty2@",
+      "id": 6
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "Qwerty2@",
+      "id": 7
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "Qwerty2@",
+      "id": 8
+    }
+  ]
+}

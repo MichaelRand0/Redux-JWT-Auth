@@ -1,5 +1,5 @@
 import Search from '@/shared/search/Search'
-import { useLazyGetUserReposQuery, useSearchUsersQuery } from '@/redux/api/todo.api'
+import { useLazyGetUserReposQuery, useSearchUsersQuery } from '@/redux/api/github.api'
 import { useDebounce } from '@/hooks/debounce'
 import { useEffect } from 'react'
 import SearchItem from '@/shared/search/components/SearchItem'

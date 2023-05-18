@@ -1,17 +1,25 @@
+import { useCreateUserMutation, useGetUsersQuery } from '@/redux/api/auth.api'
 import { authSlice } from '@/redux/slices/auth.slice'
 import { RootState } from '@/redux/store'
 import { bindActionCreators } from '@reduxjs/toolkit'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 export function useAuth() {
   const dispatch = useDispatch()
   const useAuthSelector = useSelector((state: RootState) => state.auth)
   const { user, status } = useAuthSelector
+  const {data: users = [], error: getUsersError} = useGetUsersQuery()
+  const [createUser, {error: createUserError}] = useCreateUserMutation()
+
+  useEffect(() => {
+    setAllUsers(users)
+  }, [])
 
   const initData = () => {
     const user = JSON.parse(localStorage.getItem('user') ?? 'null')
-    const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
-    setAllUsers(allUsers)
+    // const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
+    // setAllUsers(allUsers)
     setUser(user)
   }
 
@@ -31,6 +39,10 @@ export function useAuth() {
     setStatus,
     setAllUsers,
     setUser,
-    initData
+    initData,
+    createUser,
+    createUserError,
+    users,
+    getUsersError
   }
 }

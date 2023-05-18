@@ -29,7 +29,7 @@ const Login = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status, setStatus, initData, user } = useAuth()
+  const { login, status, setStatus, initData, user, users } = useAuth()
   useEffect(() => {
     initData()
   }, [])
