@@ -9,8 +9,6 @@ import { object, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
-import Dialog from '@/shared/dialogs/Dialog'
-import { useDialog } from '@/shared/dialogs/hooks'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/auth'
 
@@ -29,7 +27,7 @@ const Login = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status, setStatus, initData, user, users } = useAuth()
+  const { login, status, initData, user } = useAuth()
   useEffect(() => {
     initData()
   }, [])
@@ -38,7 +36,6 @@ const Login = (props: Props) => {
       push('/')
     }
   }, [user])
-  const { open, toggleOpen } = useDialog()
   const { push } = useRouter()
   const onSubmit = () => {
     const user = {
@@ -51,11 +48,6 @@ const Login = (props: Props) => {
   const onError = () => {
     console.log('errors', errors)
   }
-  useEffect(() => {
-    if (status?.type === 'success' || status?.type === 'error') {
-      toggleOpen(true)
-    }
-  }, [status])
   return (
     <AuthViewBase>
       <Modal>
@@ -81,19 +73,6 @@ const Login = (props: Props) => {
           </ButtonMain>
         </div>
       </Modal>
-      <Dialog
-        variant={status?.type === 'success' ? 'success' : 'error'}
-        open={open}
-        handleOpen={() => {
-          toggleOpen(false)
-          setStatus({
-            type: 'waiting',
-            message: '',
-          })
-        }}
-      >
-        {status?.message}
-      </Dialog>
     </AuthViewBase>
   )
 }

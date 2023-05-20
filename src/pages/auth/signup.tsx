@@ -9,9 +9,6 @@ import { object, ref, string } from 'yup'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Alert from '@/shared/modals/Alert'
-import { useRouter } from 'next/router'
-import Dialog from '@/shared/dialogs/Dialog'
-import { useDialog } from '@/shared/dialogs/hooks'
 import { useAuth } from '@/hooks/auth'
 import { usePopup } from '@/hooks/popup'
 
@@ -36,21 +33,25 @@ const SignUp = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { push } = useRouter()
-  const { status, setStatus, createUser } = useAuth()
-  const { open, toggleOpen } = useDialog()
-  const {setPopup} = usePopup()
+  const { createUser } = useAuth()
+  const { setPopup } = usePopup()
   const onSubmit = async () => {
     const user = {
       login: getValues().login,
       password: getValues().password,
     }
-    await createUser(user).then((resp:any) => {
-      if(!resp?.error) {
+    await createUser(user).then((resp: any) => {
+      console.log('resp', resp)
+      if (!resp?.error) {
         setPopup({
           type: 'success',
           message: 'Аккаунт успешно создан!',
-          toRoute: '/auth/login'
+          toRoute: '/auth/login',
+        })
+      } else {
+        setPopup({
+          type: 'error',
+          message: resp.error.data.message === 'User already exists' ? 'Пользователь с таким логином уже существует.' : 'Произошла ошибка, попробуйте позже.',
         })
       }
     })
@@ -98,22 +99,6 @@ const SignUp = (props: Props) => {
           </Alert>
         </div>
       </Modal>
-      <Dialog
-        variant={status?.type === 'success' ? 'success' : 'error'}
-        open={open}
-        handleOpen={() => {
-          toggleOpen(false)
-          setStatus({
-            type: 'waiting',
-            message: '',
-          })
-          if (status?.type === 'success') {
-            push('/auth/login')
-          }
-        }}
-      >
-        {status?.message}
-      </Dialog>
     </AuthViewBase>
   )
 }
