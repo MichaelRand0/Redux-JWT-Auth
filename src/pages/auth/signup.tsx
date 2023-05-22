@@ -16,7 +16,7 @@ interface Props extends React.ComponentProps<'div'> {}
 
 const SignUp = (props: Props) => {
   const schema = object({
-    login: string().required('Обязательное поле'),
+    email: string().required('Обязательное поле').email('Неправильный email'),
     password: string()
       .required('Обязательное поле')
       .min(6, 'Минимум 6 символов')
@@ -37,7 +37,7 @@ const SignUp = (props: Props) => {
   const { setPopup } = usePopup()
   const onSubmit = async () => {
     const user = {
-      login: getValues().login,
+      email: getValues().email,
       password: getValues().password,
     }
     await createUser(user).then((resp: any) => {
@@ -51,7 +51,7 @@ const SignUp = (props: Props) => {
       } else {
         setPopup({
           type: 'error',
-          message: resp.error.data.message === 'User already exists' ? 'Пользователь с таким логином уже существует.' : 'Произошла ошибка, попробуйте позже.',
+          message: resp?.error?.data?.message === 'User already exists' ? 'Пользователь с таким логином уже существует.' : 'Произошла ошибка, попробуйте позже.',
         })
       }
     })
@@ -67,8 +67,8 @@ const SignUp = (props: Props) => {
         </Title>
         <div className="max-w-[200px] w-full flex flex-col items-center">
           <InputMain
-            register={{ ...register('login'), label: i18n._auth.login }}
-            error={errors?.['login']?.message?.toString()}
+            register={{ ...register('email'), label: i18n._auth.email }}
+            error={errors?.['email']?.message?.toString()}
             containerClassName="mb-3"
           />
           <InputMain

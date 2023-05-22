@@ -15,9 +15,9 @@ const _auth = {
     ru: 'Войти',
     en: 'Sign in'
   },
-  login: {
-    ru: 'Логин',
-    en: 'Login'
+  email: {
+    ru: 'Электронная почта',
+    en: 'Email'
   },
   password: {
     ru: 'Пароль',

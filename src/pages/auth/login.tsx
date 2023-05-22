@@ -11,12 +11,13 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useAuth } from '@/hooks/auth'
+import { usePopup } from '@/hooks/popup'
 
 interface Props extends React.ComponentProps<'div'> {}
 
 const Login = (props: Props) => {
   const schema = object({
-    login: string().required('Обязательное поле'),
+    email: string().required('Обязательное поле').email('Неправильный email'),
     password: string().required('Обязательное поле'),
   })
   const {
@@ -27,7 +28,7 @@ const Login = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status, initData, user } = useAuth()
+  const { login, status, initData, user, signIn } = useAuth()
   useEffect(() => {
     initData()
   }, [])
@@ -37,13 +38,26 @@ const Login = (props: Props) => {
     }
   }, [user])
   const { push } = useRouter()
-  const onSubmit = () => {
+  const { setPopup } = usePopup()
+  const onSubmit = async () => {
     const user = {
-      login: getValues().login,
+      email: getValues().email,
       password: getValues().password,
     }
-    login(user)
-    console.log('STATUS', status)
+    await signIn(user).then((resp: any) => {
+      console.log('AUTH RESPONSE:', resp)
+      if (resp?.error) {
+        setPopup({
+          type: 'error',
+          message:
+            resp.error.data.message === 'Incorrect login or password.'
+              ? 'Неправильный логин или пароль.'
+              : 'Произошла ошибка, попробуйте позже.',
+        })
+      }
+    })
+    // login(user)
+    // console.log('STATUS', status)
   }
   const onError = () => {
     console.log('errors', errors)
@@ -56,8 +70,8 @@ const Login = (props: Props) => {
         </Title>
         <div className="max-w-[200px] w-full flex flex-col items-center">
           <InputMain
-            error={errors?.['login']?.message?.toString()}
-            register={{ ...register('login'), label: i18n._auth.login }}
+            error={errors?.['email']?.message?.toString()}
+            register={{ ...register('email'), label: i18n._auth.email }}
             containerClassName="mb-3"
           />
           <InputMain

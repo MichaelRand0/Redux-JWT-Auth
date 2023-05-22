@@ -1,37 +1,19 @@
+
 const jsonServer = require('json-server')
+const auth = require('json-server-auth')
 const server = jsonServer.create()
-const fs = require('fs')
 const path = require('path')
 const router = jsonServer.router(path.join(__dirname, 'db.json'))
-const middlewares = jsonServer.defaults()
 
-server.use(jsonServer.bodyParser)
+server.db = router.db
 
 server.use((req, res, next) => {
-  if (req.method === 'POST') {
-    if (req.path === '/users') {
-      const { login } = req.body
-      const bd = JSON.parse(fs.readFileSync('server/db.json', 'utf-8'))
-      const isUserAlreadyExists = bd.users.some((user) => user.login === login)
-      if (isUserAlreadyExists) {
-        router.render = (req, res) => {
-          res.status(500).jsonp({
-            message: 'User already exists',
-          })
-        }
-      } else {
-        router.render = (req, res) => {
-          res.status(200).jsonp({
-            message: 'User successfully created!',
-          })
-        }
-      }
-    }
-  }
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', "Origin, X-Requested-With, Content-Type, Accept")
   next()
 })
 
-server.use(middlewares)
+server.use(auth)
 server.use(router)
 
 server.listen(3001, () => {

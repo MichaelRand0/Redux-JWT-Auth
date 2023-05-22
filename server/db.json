@@ -4,6 +4,26 @@
       "login": "MichaelRand02",
       "password": "Qwerty2@",
       "id": 1
+    },
+    {
+      "login": "biba_baba",
+      "password": "Qwerty2@",
+      "id": 2
+    },
+    {
+      "login": "Ayn_Rand",
+      "password": "Qwerty2@",
+      "id": 3
+    },
+    {
+      "email": "Qwerty@ya.ru",
+      "password": "$2a$10$w5JKVPHAi6K8V5TsOGxfr.iNAHH6m7hD5Htb9wok7RHm5jtIP4iki",
+      "id": 4
+    },
+    {
+      "email": "qwe2@ya.ru",
+      "password": "$2a$10$07vy69b2FeI72Dw2/KrW7eAMoZi6LQCMUdTBn5zjAFM6AvoFKaf/O",
+      "id": 5
     }
   ]
 }

@@ -1,4 +1,4 @@
-import { useCreateUserMutation, useGetUsersQuery } from '@/redux/api/auth.api'
+import { useCreateUserMutation, useGetUsersQuery, useSignInMutation } from '@/redux/api/auth.api'
 import { authSlice } from '@/redux/slices/auth.slice'
 import { RootState } from '@/redux/store'
 import { bindActionCreators } from '@reduxjs/toolkit'
@@ -11,6 +11,7 @@ export function useAuth() {
   const { user, status } = useAuthSelector
   const {data: users = [], error: getUsersError} = useGetUsersQuery()
   const [createUser, {error: createUserError}] = useCreateUserMutation()
+  const [signIn, {error: signInError}] = useSignInMutation()
 
   useEffect(() => {
     setAllUsers(users)
@@ -43,6 +44,8 @@ export function useAuth() {
     createUser,
     createUserError,
     users,
-    getUsersError
+    getUsersError,
+    signIn,
+    signInError
   }
 }
