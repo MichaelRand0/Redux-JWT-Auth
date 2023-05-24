@@ -17,7 +17,7 @@ interface Props extends React.ComponentProps<'div'> {}
 
 const Login = (props: Props) => {
   const schema = object({
-    email: string().required('Обязательное поле').email('Неправильный email'),
+    login: string().required('Обязательное поле'),
     password: string().required('Обязательное поле'),
   })
   const {
@@ -41,16 +41,17 @@ const Login = (props: Props) => {
   const { setPopup } = usePopup()
   const onSubmit = async () => {
     const user = {
-      email: getValues().email,
+      login: getValues().login,
       password: getValues().password,
     }
     await signIn(user).then((resp: any) => {
       console.log('AUTH RESPONSE:', resp)
+      localStorage.setItem('token', resp?.data?.accessToken)
       if (resp?.error) {
         setPopup({
           type: 'error',
           message:
-            resp.error.data.message === 'Incorrect login or password.'
+            resp.error.data.message === 'Incorrect login or password'
               ? 'Неправильный логин или пароль.'
               : 'Произошла ошибка, попробуйте позже.',
         })
@@ -70,8 +71,8 @@ const Login = (props: Props) => {
         </Title>
         <div className="max-w-[200px] w-full flex flex-col items-center">
           <InputMain
-            error={errors?.['email']?.message?.toString()}
-            register={{ ...register('email'), label: i18n._auth.email }}
+            error={errors?.['login']?.message?.toString()}
+            register={{ ...register('login'), label: i18n._auth.login }}
             containerClassName="mb-3"
           />
           <InputMain

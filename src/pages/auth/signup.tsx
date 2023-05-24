@@ -16,7 +16,7 @@ interface Props extends React.ComponentProps<'div'> {}
 
 const SignUp = (props: Props) => {
   const schema = object({
-    email: string().required('Обязательное поле').email('Неправильный email'),
+    login: string().required('Обязательное поле'),
     password: string()
       .required('Обязательное поле')
       .min(6, 'Минимум 6 символов')
@@ -37,7 +37,7 @@ const SignUp = (props: Props) => {
   const { setPopup } = usePopup()
   const onSubmit = async () => {
     const user = {
-      email: getValues().email,
+      login: getValues().login,
       password: getValues().password,
     }
     await createUser(user).then((resp: any) => {
@@ -67,8 +67,8 @@ const SignUp = (props: Props) => {
         </Title>
         <div className="max-w-[200px] w-full flex flex-col items-center">
           <InputMain
-            register={{ ...register('email'), label: i18n._auth.email }}
-            error={errors?.['email']?.message?.toString()}
+            register={{ ...register('login'), label: i18n._auth.login }}
+            error={errors?.['login']?.message?.toString()}
             containerClassName="mb-3"
           />
           <InputMain

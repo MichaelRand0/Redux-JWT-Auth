@@ -23,6 +23,10 @@ const _auth = {
     ru: 'Пароль',
     en: 'Password'
   },
+  login: {
+    ru: 'Логин',
+    en: 'Login'
+  },
   repeatPassword: {
     ru: 'Повторный пароль',
     en: 'Repeat password'
