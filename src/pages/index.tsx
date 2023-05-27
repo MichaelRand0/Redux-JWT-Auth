@@ -20,7 +20,7 @@ export default function Home() {
     if (!user) {
       push('auth/login')
     }
-  }, [user])
+  }, [])
 
   const debouncedValue = useDebounce(values?.search, 500)
   const { data, isFetching } = useSearchUsersQuery(debouncedValue, {

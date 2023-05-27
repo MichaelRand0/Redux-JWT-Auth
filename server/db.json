@@ -1,49 +1,29 @@
 {
   "users": [
     {
-      "login": "MichaelRand02",
-      "password": "Qwerty2@",
+      "login": "Qwerty",
+      "password": "$2a$10$DowLXlDTk20fp52AqHevNeM8iwAkArx.bemLl9cOglDqrlMCCHSea",
       "id": 1
     },
     {
-      "login": "biba_baba",
+      "login": "Qwerty",
       "password": "Qwerty2@",
       "id": 2
     },
     {
-      "login": "Ayn_Rand",
-      "password": "Qwerty2@",
+      "login": "Qwerty2",
+      "password": "$2a$10$akCAGTfcO2M.ro3gkVzOuebFdU1m.Hmr/A.3EXMVOABn/KjiybXHm",
       "id": 3
     },
     {
-      "email": "Qwerty@ya.ru",
-      "password": "$2a$10$w5JKVPHAi6K8V5TsOGxfr.iNAHH6m7hD5Htb9wok7RHm5jtIP4iki",
+      "login": "Qwerty3",
+      "password": "$2a$10$kyUDUR/yWbsI2sJ6mafWPuGndY2kDATfj/AfIVuhovVZakl8rnqi2",
       "id": 4
     },
     {
-      "email": "qwe2@ya.ru",
-      "password": "$2a$10$07vy69b2FeI72Dw2/KrW7eAMoZi6LQCMUdTBn5zjAFM6AvoFKaf/O",
+      "login": "Qwerty2",
+      "password": "Qwerty2@",
       "id": 5
-    },
-    {
-      "login": "JoeCobe",
-      "password": "Qwerty2@",
-      "id": 6
-    },
-    {
-      "login": "baba",
-      "password": "$2a$10$44i0kaf5C.F5mrq22WuRyugbXdpUVk8lCb9bN8Z.vSmDm5Fd3dMbC",
-      "id": 7
-    },
-    {
-      "login": "baba",
-      "password": "Qwerty2@",
-      "id": 8
-    },
-    {
-      "login": "baba",
-      "password": "Qwerty2@",
-      "id": 9
     }
   ]
 }

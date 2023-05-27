@@ -32,11 +32,11 @@ const Login = (props: Props) => {
   useEffect(() => {
     initData()
   }, [])
-  useEffect(() => {
-    if (user) {
-      push('/')
-    }
-  }, [user])
+  // useEffect(() => {
+  //   if (user) {
+  //     push('/')
+  //   }
+  // }, [user])
   const { push } = useRouter()
   const { setPopup } = usePopup()
   const onSubmit = async () => {
@@ -46,7 +46,6 @@ const Login = (props: Props) => {
     }
     await signIn(user).then((resp: any) => {
       console.log('AUTH RESPONSE:', resp)
-      localStorage.setItem('token', resp?.data?.accessToken)
       if (resp?.error) {
         setPopup({
           type: 'error',
@@ -55,6 +54,12 @@ const Login = (props: Props) => {
               ? 'Неправильный логин или пароль.'
               : 'Произошла ошибка, попробуйте позже.',
         })
+      } else {
+        // resp.cookie("token", resp?.data?.token, {
+        //   httpOnly: true
+        // })
+        localStorage.setItem('token', resp?.data?.token)
+        push('/')
       }
     })
     // login(user)
