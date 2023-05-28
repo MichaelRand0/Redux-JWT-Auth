@@ -25,6 +25,7 @@ export const authAPI = createApi({
       query: (body:User) => ({
         url: 'signin',
         method: 'POST',
+        credentials: 'include',
         body
       })
     })
