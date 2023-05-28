@@ -1,29 +1,4 @@
 {
   "users": [
-    {
-      "login": "Qwerty",
-      "password": "$2a$10$DowLXlDTk20fp52AqHevNeM8iwAkArx.bemLl9cOglDqrlMCCHSea",
-      "id": 1
-    },
-    {
-      "login": "Qwerty",
-      "password": "Qwerty2@",
-      "id": 2
-    },
-    {
-      "login": "Qwerty2",
-      "password": "$2a$10$akCAGTfcO2M.ro3gkVzOuebFdU1m.Hmr/A.3EXMVOABn/KjiybXHm",
-      "id": 3
-    },
-    {
-      "login": "Qwerty3",
-      "password": "$2a$10$kyUDUR/yWbsI2sJ6mafWPuGndY2kDATfj/AfIVuhovVZakl8rnqi2",
-      "id": 4
-    },
-    {
-      "login": "Qwerty2",
-      "password": "Qwerty2@",
-      "id": 5
-    }
   ]
 }
