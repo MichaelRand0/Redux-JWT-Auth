@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/dist/query/react'
 import { User, Users } from '../models/auth'
 
-const baseUrl = 'http://localhost:3001/'
+const baseUrl = `http://localhost:${process.env.NEXT_PUBLIC_PORT}/`
 
 export const authAPI = createApi({
   reducerPath: 'auth/api',
@@ -28,8 +28,22 @@ export const authAPI = createApi({
         credentials: 'include',
         body
       })
+    }),
+    logout: build.mutation<void, void>({
+      query: () => ({
+        url: 'logout',
+        method: 'POST',
+        credentials: 'include',
+      })
+    }),
+    verify: build.mutation<void, void>({
+      query: () => ({
+        url: 'verify',
+        method: 'POST',
+        credentials: 'include',
+      })
     })
   }),
 })
 
-export const { useGetUsersQuery, useCreateUserMutation, useSignInMutation } = authAPI
+export const { useGetUsersQuery, useCreateUserMutation, useSignInMutation, useVerifyMutation, useLogoutMutation } = authAPI

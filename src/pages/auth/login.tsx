@@ -28,15 +28,11 @@ const Login = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status, initData, user, signIn } = useAuth()
+  const { login, status, initData, verifyUser, user, signIn } = useAuth()
   useEffect(() => {
+    verifyUser()
     initData()
   }, [])
-  // useEffect(() => {
-  //   if (user) {
-  //     push('/')
-  //   }
-  // }, [user])
   const { push } = useRouter()
   const { setPopup } = usePopup()
   const onSubmit = async () => {
@@ -50,20 +46,15 @@ const Login = (props: Props) => {
         setPopup({
           type: 'error',
           message:
-            resp.error.data.message === 'Incorrect login or password'
+            resp?.error?.data?.message === 'Incorrect login or password'
               ? 'Неправильный логин или пароль.'
               : 'Произошла ошибка, попробуйте позже.',
         })
       } else {
-        // resp.cookie("token", resp?.data?.token, {
-        //   httpOnly: true
-        // })
         localStorage.setItem('token', resp?.data?.token)
         push('/')
       }
     })
-    // login(user)
-    // console.log('STATUS', status)
   }
   const onError = () => {
     console.log('errors', errors)

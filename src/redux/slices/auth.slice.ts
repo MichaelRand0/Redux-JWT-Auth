@@ -19,17 +19,6 @@ export const authSlice = createSlice({
   reducers: {
     setUser(state, action: PayloadAction<User | null>) {
       state.user = action.payload
-      localStorage.setItem(
-        'user',
-        JSON.stringify(
-          action.payload
-            ? {
-                ...action.payload,
-                timestamp: new Date().getTime(),
-              }
-            : null,
-        ),
-      )
     },
     setStatus(state, action: PayloadAction<any>) {
       state.status = action.payload

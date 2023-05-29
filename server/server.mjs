@@ -2,6 +2,8 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import loginRoute from './routes/login.mjs'
 import usersRoute from './routes/users.mjs'
+import verifyRoute from './routes/verify.mjs'
+import logoutRoute from './routes/logout.mjs'
 import registerRoute from './routes/register.mjs'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -11,8 +13,6 @@ dotenv.config()
 
 const app = express()
 app.use(cors({credentials: true, origin: 'http://localhost:3000'}))
-
-const PORT = 3001
 
 app.use(cookieParser())
 app.use(express.urlencoded({ extended: false }))
@@ -25,10 +25,12 @@ app.use(bodyParser.json())
 //   next()
 // })
 
-app.post('/signin', loginRoute)
-app.post('/register', registerRoute)
 app.get('/users', usersRoute)
+app.post('/signin', loginRoute)
+app.post('/logout', logoutRoute)
+app.post('/register', registerRoute)
+app.post('/verify', verifyRoute)
 
-app.listen(PORT, () => {
-  console.log(`Express server started on port: ${PORT}`)
+app.listen(process.env.NEXT_PUBLIC_PORT, () => {
+  console.log(`Express server started on port: ${process.env.NEXT_PUBLIC_PORT}`)
 })

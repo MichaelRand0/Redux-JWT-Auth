@@ -1,15 +1,29 @@
+import isAuthPage from '@/helpers/isAuthPage'
+import { useAuth } from '@/hooks/auth'
 import { usePopup } from '@/hooks/popup'
 import LogoGit from '@/shared/buttons/LogoGit'
 import Dialog from '@/shared/dialogs/Dialog'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
 
 interface Props extends React.ComponentProps<'div'> {}
 
 const LayoutMain = (props: Props) => {
   const { children } = props
-  const { pathname } = useRouter()
+  const { pathname, push } = useRouter()
   const { popup, setPopup } = usePopup()
-  const {push} = useRouter()
+  const { verifyUser, user } = useAuth()
+  useEffect(() => {
+    verifyUser()
+  }, [])
+  useEffect(() => {
+    const isAuth = isAuthPage(pathname)
+    if (!user) {
+      push('/auth/login')
+    } else if (isAuth) {
+      push('/')
+    }
+  }, [user])
   return (
     <>
       <main>{children}</main>

@@ -13,14 +13,6 @@ export default function Home() {
     name: 'search',
     label: 'Поиск пользователей GitHub',
   })
-  const { push } = useRouter()
-  const { user } = useAuth()
-
-  useEffect(() => {
-    if (!user) {
-      push('auth/login')
-    }
-  }, [])
 
   const debouncedValue = useDebounce(values?.search, 500)
   const { data, isFetching } = useSearchUsersQuery(debouncedValue, {

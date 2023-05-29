@@ -1,7 +1,8 @@
-import { useCreateUserMutation, useGetUsersQuery, useSignInMutation } from '@/redux/api/auth.api'
+import { useCreateUserMutation, useGetUsersQuery, useLogoutMutation, useSignInMutation, useVerifyMutation } from '@/redux/api/auth.api'
 import { authSlice } from '@/redux/slices/auth.slice'
 import { RootState } from '@/redux/store'
 import { bindActionCreators } from '@reduxjs/toolkit'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -12,6 +13,9 @@ export function useAuth() {
   const {data: users = [], error: getUsersError} = useGetUsersQuery()
   const [createUser, {error: createUserError}] = useCreateUserMutation()
   const [signIn, {error: signInError}] = useSignInMutation()
+  const [verify] = useVerifyMutation()
+  const [logout] = useLogoutMutation()
+  const {push} = useRouter()
 
   useEffect(() => {
     setAllUsers(users)
@@ -19,9 +23,17 @@ export function useAuth() {
 
   const initData = () => {
     const user = JSON.parse(localStorage.getItem('user') ?? 'null')
-    // const allUsers = JSON.parse(localStorage.getItem('allUsers') ?? '[]')
-    // setAllUsers(allUsers)
     setUser(user)
+  }
+
+  const verifyUser = async () => {
+    return verify().then((resp:any) => {
+      if(resp?.data?.message !== 'Token is valid') {
+        setUser(null)
+      }
+      console.log('resp,', resp)
+      setUser(resp?.data?.token)
+    })
   }
 
   const actions = bindActionCreators(
@@ -30,11 +42,10 @@ export function useAuth() {
     },
     dispatch,
   )
-  const { login, logout, signup, setStatus, setAllUsers, setUser } = actions
+  const { login, signup, setStatus, setAllUsers, setUser } = actions
   return {
     user,
     login,
-    logout,
     status,
     signup,
     setStatus,
@@ -46,6 +57,8 @@ export function useAuth() {
     users,
     getUsersError,
     signIn,
-    signInError
+    signInError,
+    logout,
+    verifyUser
   }
 }
