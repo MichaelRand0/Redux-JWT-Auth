@@ -1,12 +1,4 @@
 {
   "users": [
-    {
-      "login": "MichaelRand0",
-      "password": "$2a$10$7TB4ZZ8Rz6notTPs/mOP0OwwEnL.G.JYadDI6UMLkJXMdOyPyxvXW"
-    },
-    {
-      "login": "Qwerty",
-      "password": "$2a$10$BGX2B./ST6m.Jf3inLr.UO7xZKmCl5ysDoHgYMD4UpGMcCkxD.Fky"
-    }
   ]
 }

@@ -1,5 +1,5 @@
 {
-  "extends": ["next/babel", "next/core-web-vitals", "plugin:tailwindcss/recommended"],
+  "extends": ["plugin:@next/next/recommended", "next/core-web-vitals", "plugin:tailwindcss/recommended"],
 
   "rules": {
     "no-alert": "error",
@@ -7,7 +7,7 @@
     "no-compare-neg-zero": "warn",
     "no-console": "warn",
     "no-magic-numbers": "warn",
-    "no-process-env": "error",
+    "no-process-env": "off",
     "no-var": "warn",
     "tailwindcss/no-arbitrary-value": "warn",
     "tailwindcss/no-custom-classname": "off",
