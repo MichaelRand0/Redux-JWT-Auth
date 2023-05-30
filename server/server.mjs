@@ -31,9 +31,9 @@ app.post('/logout', logoutRoute)
 app.post('/register', registerRoute)
 app.post('/verify', verifyRoute)
 
-// app.listen(process.env.NEXT_PUBLIC_PORT, () => {
-//   console.log(`Express server started on port: ${process.env.NEXT_PUBLIC_PORT}`)
-// })
+app.listen(process.env.NEXT_PUBLIC_PORT, () => {
+  console.log(`Express server started on port: ${process.env.NEXT_PUBLIC_PORT}`)
+})
 
 export default app
 
