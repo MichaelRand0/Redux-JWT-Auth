@@ -7,8 +7,7 @@
     "server": "node server/server.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "vercel-build": "echo hello"
+    "lint": "next lint"
   },
   "dependencies": {
     "@heroicons/react": "^2.0.17",
