@@ -1,4 +1,4 @@
-<h1>Проект: Redux-GitHub</h1>
+<h1>Проект: Redux-JWT-Auth</h1>
 
 <h2>Превью проекта:</h2>
 
