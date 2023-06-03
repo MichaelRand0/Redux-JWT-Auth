@@ -1,6 +1,8 @@
+// @ts-nocheck
+
 import getDB from "../helpers/getDB.mjs"
 
-export default (req, res) => {
-  const db = getDB()
-  res.send(db)
+export default async (req, res) => {
+  const db = await getDB()
+  res.send(db.users)
 }

@@ -41,7 +41,6 @@ const SignUp = (props: Props) => {
       password: getValues().password,
     }
     await createUser(user).then((resp: any) => {
-      console.log('resp', resp)
       if (!resp?.error) {
         setPopup({
           type: 'success',

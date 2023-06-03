@@ -1,4 +1,20 @@
 {
   "users": [
+    {
+      "login": "michael",
+      "password": "1q340qwe"
+    },
+    {
+      "login": "Michael21wq",
+      "password": "$2a$10$xujn9c/WiGStf75mVOqoOufQH74.lcm5UFW572NH37srxJQ3vwiiq"
+    },
+    {
+      "login": "Qwerty",
+      "password": "$2a$10$FDs299xcTMCQASIN4KbFBeniqWIcUMejhrgbMWkIaN0UFRZL4VN8W"
+    },
+    {
+      "login": "MichaelRand0",
+      "password": "$2a$10$WNvLcMKC9b70iQskwQY4reiUfZZFlZiG5R2dyUeFG4f3aP99woQ9a"
+    }
   ]
 }

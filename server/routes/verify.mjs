@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import jwt from 'jsonwebtoken'
 
 export default (req, res, next) => {
@@ -7,7 +9,10 @@ export default (req, res, next) => {
     req.user = user
     res.status(200).json({
       message: 'Token is valid',
-      token,
+      data: {
+        user: user.login,
+        token
+      },
     })
   } catch (error) {
     res.clearCookie('token')

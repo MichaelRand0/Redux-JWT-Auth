@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"next dev\" \"yarn server\"",
-    "server": "node server/server.mjs",
+    "server": "node server/index.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"

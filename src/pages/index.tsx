@@ -3,10 +3,8 @@ import { useLazyGetUserReposQuery, useSearchUsersQuery } from '@/redux/api/githu
 import { useDebounce } from '@/hooks/debounce'
 import { useEffect } from 'react'
 import SearchItem from '@/shared/search/components/SearchItem'
-import { useRouter } from 'next/router'
 import { useSearch } from '@/shared/search/hooks'
 import Profile from '@/shared/profile/Profile'
-import { useAuth } from '@/hooks/auth'
 
 export default function Home() {
   const { registerData, values, setLabel } = useSearch({

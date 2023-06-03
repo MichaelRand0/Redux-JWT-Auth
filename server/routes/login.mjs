@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import checkUserExists from '../helpers/checkUserExists.mjs'
 import jwt from 'jsonwebtoken'
 
@@ -7,8 +9,8 @@ const createToken = (payload) => {
 
 export default async (req, res) => {
   const { login, password } = req.body
-  console.log('REQ BODY:', req.body)
-  if (checkUserExists(login, password)) {
+  const isUserExists = await checkUserExists(login, password)
+  if (isUserExists) {
     const token = createToken({ login, password })
     res.cookie('token', token, {
       httpOnly: true,

@@ -12,18 +12,19 @@ const LayoutMain = (props: Props) => {
   const { children } = props
   const { pathname, push } = useRouter()
   const { popup, setPopup } = usePopup()
-  const { verifyUser, user } = useAuth()
-  useEffect(() => {
-    verifyUser()
-  }, [])
+  const { user } = useAuth()
   useEffect(() => {
     const isAuth = isAuthPage(pathname)
-    if (!user) {
-      push('/auth/login')
-    } else if (isAuth) {
-      push('/')
+    if(isAuth) {
+      if(user) {
+        push('/')
+      }
+    } else {
+      if(!user) {
+        push('/auth/login')
+      }
     }
-  }, [user])
+  }, [user, pathname])
   return (
     <>
       <main>{children}</main>

@@ -28,11 +28,8 @@ const Login = (props: Props) => {
   } = useForm({
     resolver: yupResolver(schema),
   })
-  const { login, status, initData, verifyUser, user, signIn } = useAuth()
-  useEffect(() => {
-    verifyUser()
-    initData()
-  }, [])
+  const { signIn } = useAuth()
+  
   const { push } = useRouter()
   const { setPopup } = usePopup()
   const onSubmit = async () => {
@@ -41,7 +38,6 @@ const Login = (props: Props) => {
       password: getValues().password,
     }
     await signIn(user).then((resp: any) => {
-      console.log('AUTH RESPONSE:', resp)
       if (resp?.error) {
         setPopup({
           type: 'error',
@@ -51,7 +47,6 @@ const Login = (props: Props) => {
               : 'Произошла ошибка, попробуйте позже.',
         })
       } else {
-        localStorage.setItem('token', resp?.data?.token)
         push('/')
       }
     })
